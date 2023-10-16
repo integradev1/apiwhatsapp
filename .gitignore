@@ -1,0 +1,36 @@
+# Arquivos compilados
+*.o
+*.ppu
+*.compiled
+*.or
+*.rsj
+
+# Bibliotecas e executáveis
+*.so
+*.dll
+*.dylib
+*.a
+*.exe
+
+# Ficheiros de cache e de sessão
+*.lfm~
+*.lpi~
+*.bak
+*.~*
+*.local
+*.identcache
+*.cache
+
+# Diretórios de saída de compilação
+lib/
+bin/
+out/
+
+# Diretório de unidades de tempo de compilação
+units/
+
+# Arquivos de projeto
+*.lps
+
+# Outros
+.DS_Store
