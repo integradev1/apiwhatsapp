@@ -874,7 +874,7 @@ object frmPrincipal: TfrmPrincipal
       object btSendRequest: TSpeedButton
         Left = 336
         Height = 37
-        Top = 162
+        Top = 160
         Width = 262
         Caption = 'Enviar Requisição'
         OnClick = btSendRequestClick
@@ -901,12 +901,72 @@ object frmPrincipal: TfrmPrincipal
       Height = 278
       Top = 216
       Width = 592
-      ActivePage = tabDocumento
+      ActivePage = tabSimples
       Align = alClient
       AutoSize = True
       BorderSpacing.Around = 8
-      TabIndex = 4
+      TabIndex = 1
       TabOrder = 1
+      OnChange = PageControl1Change
+      object tabStatus: TTabSheet
+        Caption = 'Status '
+        ClientHeight = 247
+        ClientWidth = 582
+        object Label4: TLabel
+          Left = 200
+          Height = 17
+          Top = 16
+          Width = 51
+          Caption = 'Status: '
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object lStatus: TLabel
+          Left = 256
+          Height = 17
+          Top = 16
+          Width = 12
+          Caption = '...'
+          ParentColor = False
+        end
+        object imgQrCode: TImage
+          Left = 200
+          Height = 168
+          Top = 40
+          Width = 162
+          Stretch = True
+        end
+        object btConsultarStatus: TSpeedButton
+          Left = 8
+          Height = 32
+          Top = 16
+          Width = 120
+          Caption = 'Consultar Status'
+          OnClick = btConsultarStatusClick
+        end
+        object lLeituraContador: TLabel
+          Left = 16
+          Height = 17
+          Top = 95
+          Width = 171
+          Caption = 'Aguardando Leitura(30s)'
+          Font.Color = clHighlight
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          Visible = False
+        end
+        object btDesconectar: TSpeedButton
+          Left = 8
+          Height = 32
+          Top = 56
+          Width = 120
+          Caption = 'Desconectar'
+          Enabled = False
+          OnClick = btDesconectarClick
+        end
+      end
       object tabSimples: TTabSheet
         Caption = 'Mensagem Simples'
         ClientHeight = 247
@@ -981,8 +1041,8 @@ object frmPrincipal: TfrmPrincipal
           Left = 10
           Height = 17
           Top = 8
-          Width = 58
-          Caption = 'Path File'
+          Width = 88
+          Caption = 'Path Imagem'
           ParentColor = False
         end
         object edtPathImage: TEdit
@@ -1037,9 +1097,10 @@ object frmPrincipal: TfrmPrincipal
           Left = 10
           Height = 17
           Top = 8
-          Width = 58
-          Caption = 'Path File'
+          Width = 74
+          Caption = 'Path Video'
           ParentColor = False
+          OnClick = Label19Click
         end
         object edtPathVideo: TEdit
           Left = 8
@@ -1093,8 +1154,8 @@ object frmPrincipal: TfrmPrincipal
           Left = 10
           Height = 17
           Top = 8
-          Width = 58
-          Caption = 'Path File'
+          Width = 112
+          Caption = 'Path Documento'
           ParentColor = False
         end
         object edtPathDocumento: TEdit
@@ -1129,6 +1190,47 @@ object frmPrincipal: TfrmPrincipal
           TabOrder = 1
         end
         object Label24: TLabel
+          Left = 10
+          Height = 27
+          Top = 120
+          Width = 330
+          Caption = 'Permitidos Arquivo de até 3mb'
+          Font.Color = 3421399
+          Font.Height = -23
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+      object tabAudio: TTabSheet
+        Caption = 'Audio'
+        ClientHeight = 247
+        ClientWidth = 582
+        object Label25: TLabel
+          Left = 10
+          Height = 17
+          Top = 8
+          Width = 77
+          Caption = 'Path Audio '
+          ParentColor = False
+        end
+        object edtPathAudio: TEdit
+          Left = 8
+          Height = 34
+          Top = 28
+          Width = 319
+          TabOrder = 0
+        end
+        object SpeedButton7: TSpeedButton
+          Left = 327
+          Height = 33
+          Top = 28
+          Width = 40
+          Images = ImageList1
+          ImageIndex = 1
+          OnClick = SpeedButton7Click
+        end
+        object Label27: TLabel
           Left = 10
           Height = 27
           Top = 120
@@ -1207,5 +1309,11 @@ object frmPrincipal: TfrmPrincipal
     Filter = 'Video (*.mp4)|*.mp4|Todos os arquivos (*)|*|'
     Left = 704
     Top = 72
+  end
+  object tAguardarLeituraQrCode: TTimer
+    Enabled = False
+    OnTimer = tAguardarLeituraQrCodeTimer
+    Left = 440
+    Top = 464
   end
 end

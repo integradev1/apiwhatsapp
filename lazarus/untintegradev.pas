@@ -9,7 +9,9 @@ uses
 
 type
 
-{ TIntegraDev }
+         //SUPORTE PODE SER ENVIADO PARA
+         // integradev1@gmail.com
+         //atendimento@integradev.com.br
 
 TIntegraDev = Class
       const urlBase = 'https://api.integradev.com.br/instance/';
@@ -26,6 +28,11 @@ TIntegraDev = Class
         function EnviarImagem(fone, pathFile, caption: string): string;
         function EnviarVideo(fone, pathFile, caption: string): string;
         function EnviarDocumento(fone, pathFile, fileName: string): string;
+        function EnviarAudio(fone, pathFile: string): string;
+
+        function getStatus() : String;
+        function setDesconectado() : String;
+        function getQrCode() : String;
 end;
 
 
@@ -249,6 +256,115 @@ begin
 
      result :=IntToStr(LResponse.StatusCode)+#13+ #13+
               LResponse.Content
+
+end;
+
+function TIntegraDev.EnviarAudio(fone, pathFile: string): string;
+var LResponse: IResponse;
+    body : String;
+begin
+     if (trim(apiToken) = '') then
+     Begin
+          MessageDlg('Token da API não informado',mterror,[mbOK],0);
+          exit;
+     end;
+
+     if (trim(instanciaToken) = '') then
+     Begin
+          MessageDlg('Token da Instancia não informado',mterror,[mbOK],0);
+          exit;
+     end;
+
+
+     // atenção ao criar o objeto precisa ser valido
+     body := '{ "file64" : "'+FileToBase64(pathFile)+'"'+
+             ' , "delayMessage" : 0 ' +
+             ' , "to" : ['+fone+']' +
+             ' }';
+
+     LResponse := TRequest.New.BaseURL(getEndPoint+'/send-audio')//passando url para image
+      .ContentType('application/json')
+      .AddHeader('access-token',apiToken) //passando token da api
+      .AddBody(body)
+      .Post;
+
+     result :=IntToStr(LResponse.StatusCode)+#13+ #13+
+              LResponse.Content
+
+end;
+
+function TIntegraDev.getStatus: String;
+var LResponse: IResponse;
+begin
+     if (trim(apiToken) = '') then
+     Begin
+          MessageDlg('Token da API não informado',mterror,[mbOK],0);
+          exit;
+     end;
+
+     if (trim(instanciaToken) = '') then
+     Begin
+          MessageDlg('Token da Instancia não informado',mterror,[mbOK],0);
+          exit;
+     end;
+
+
+     LResponse := TRequest.New.BaseURL(getEndPoint+'/status')//passando url para image
+      .ContentType('application/json')
+      .AddHeader('access-token',apiToken) //passando token da api
+      .get;
+
+     result :=LResponse.Content
+
+end;
+
+function TIntegraDev.setDesconectado: String;
+var LResponse: IResponse;
+begin
+     if (trim(apiToken) = '') then
+     Begin
+          MessageDlg('Token da API não informado',mterror,[mbOK],0);
+          exit;
+     end;
+
+     if (trim(instanciaToken) = '') then
+     Begin
+          MessageDlg('Token da Instancia não informado',mterror,[mbOK],0);
+          exit;
+     end;
+
+
+     LResponse := TRequest.New.BaseURL(getEndPoint+'/disconect')//passando url para image
+      .ContentType('application/json')
+      .AddHeader('access-token',apiToken) //passando token da api
+      .Delete;
+
+     result :=LResponse.Content
+
+end;
+
+function TIntegraDev.getQrCode: String;
+var LResponse: IResponse;
+begin
+     if (trim(apiToken) = '') then
+     Begin
+          MessageDlg('Token da API não informado',mterror,[mbOK],0);
+          exit;
+     end;
+
+     if (trim(instanciaToken) = '') then
+     Begin
+          MessageDlg('Token da Instancia não informado',mterror,[mbOK],0);
+          exit;
+     end;
+
+
+     LResponse := TRequest.New.BaseURL(getEndPoint+'/qrcode')//passando url para image
+      .ContentType('application/json')
+      .AddHeader('access-token',apiToken) //passando token da api
+      .get;
+
+     result :=LResponse.Content
 
 end;
 

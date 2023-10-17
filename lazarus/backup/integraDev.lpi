@@ -25,6 +25,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="lazbarcodes"/>
+      </Item>
+      <Item>
         <PackageName Value="LazUtils"/>
       </Item>
       <Item>
@@ -93,6 +96,9 @@
       </Item>
       <Item>
         <Name Value="EInvalidGraphic"/>
+      </Item>
+      <Item>
+        <Name Value="EJSON"/>
       </Item>
     </Exceptions>
   </Debugging>

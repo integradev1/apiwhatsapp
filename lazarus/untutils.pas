@@ -5,18 +5,36 @@ unit untUtils;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, forms, StdCtrls ;
+  Classes, SysUtils, IniFiles, forms, StdCtrls, Base64,Graphics, LCLType,ExtCtrls ;
           procedure SalvarIni(key, value :String);
           Function LerIni(key :String):String;
           function listBoxToStr(listbox: TListBox): string;
 
+          procedure LoadBase64ToImage(const Base64Str: string; AImage: TImage);
+
 implementation
 
-function EscapeJSONString(const Input: string): string;
+function Base64ToStream(const Base64Str: string): TMemoryStream;
+var
+  DecodedStr: RawByteString;
 begin
-  Result := StringReplace(Input, '\', '\\', [rfReplaceAll]);
-  Result := StringReplace(Result, '"', '\"', [rfReplaceAll]);
-  // Adicione outras substituições, se necessário
+  DecodedStr := DecodeStringBase64(Base64Str);
+  Result := TMemoryStream.Create;
+  Result.Write(DecodedStr[1], Length(DecodedStr));
+  Result.Position := 0;
+end;
+
+
+procedure LoadBase64ToImage(const Base64Str: string; AImage: TImage);
+var
+  Stream: TMemoryStream;
+begin
+  Stream := Base64ToStream(Base64Str);
+  try
+    AImage.Picture.LoadFromStream(Stream);
+  finally
+    Stream.Free;
+  end;
 end;
 
 procedure SalvarIni(key, value: String);
